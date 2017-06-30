@@ -4,24 +4,6 @@ import os
 import logging
 from lxml.html import fromstring
 
-def __crawl(url, dstpath, intv=1):
-  """
-  Utility function
-  """
-  hdr = {'User-Agent': 'Mozilla/5.0'}
-  req = urllib2.Request(url,headers=hdr)
-  with open(dstpath, 'w') as f:
-    f.write(urllib2.urlopen(req, timeout=5).read())
-    time.sleep(intv)
-
-def __validateHTML(htmlpath):
-  try:
-    with open(htmlpath) as f:
-      fromstring(f.read())
-    return True
-  except:
-    return False
-
 class URLCrawler():
   """
   Given a bunch of URLs, and crawl them one by one
@@ -43,7 +25,7 @@ class URLCrawler():
     for pair in urlpl:
       u = pair[0]
       f = pair[1]
-      if os.path.exists(f) && os.path.getsize(f) > 0 && __validateHTML(f):
+      if os.path.exists(f) and os.path.getsize(f) > 0 and self.__validateHTML(f):
         crawled.append((u, f))
       else:
         tocrawl.append((u, f))   
@@ -55,7 +37,24 @@ class URLCrawler():
     logging.info('--------------------------------------------------------------------')
     return tocrawl
 
-  def crawl(self, urlpl, mandatory=False):
+  def __crawl(self, url, dstpath, intv=1):
+    """utility function
+    """
+    hdr = {'User-Agent': 'Mozilla/5.0'}
+    req = urllib2.Request(url,headers=hdr)
+    with open(dstpath, 'w') as f:
+      f.write(urllib2.urlopen(req, timeout=5).read())
+      time.sleep(intv)
+
+  def __validateHTML(self, htmlpath):
+    try:
+      with open(htmlpath) as f:
+        fromstring(f.read())
+      return True
+    except:
+      return False
+
+  def crawl(self, urlpl, mandatory=False, intv=1):
     """urlpl is a list of (u, f) pairs where u is the url to crawl, and f is the dest
     file path; we intentionally do not use dict to keep the crawling order.
     """
@@ -69,6 +68,7 @@ class URLCrawler():
       if os.path.exists(d) == False:
         try:
           os.makedirs(d)
+          print 'created dir', d
         except Exception as e:
           logging.error(e)
           logging.error('Fail to mkdir: ' + download_dir)
@@ -81,7 +81,7 @@ class URLCrawler():
         logging.info('SKIP (CRAWLED): ' + u)
       else:
         try:
-          __crawl(u, f)
+          self.__crawl(u, f, intv)
           logging.info('CRAWLED: ' + u)
           scnt += 1
         except Exception as e:
