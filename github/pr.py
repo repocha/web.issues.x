@@ -5,8 +5,8 @@ import time
 import os
 import subprocess
 
-username = "tianyin"
-password = "xuty19850620"
+username = ""
+password = ""
 
 def get_last_prno(repo_lst):
   with open(repo_lst) as f:
