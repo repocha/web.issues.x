@@ -1,86 +1,78 @@
 import urllib2
 import time
 import os
+import logging
 from lxml.html import fromstring
 
-def crawl(url, dstpath, intv=2):
+def crawl(url, dstpath, intv=1):
   """
   Utility function
   """
-  if os.path.exists(dstpath):
-    if validate(dstpath):
-      print 'SKIP (CRAWLED): ', url
-      return
-    else:
-      print 'CORRUPTED: ', url
-      os.remove(dstpath)
+  hdr = {'User-Agent': 'Mozilla/5.0'}
+  req = urllib2.Request(url,headers=hdr)
   with open(dstpath, 'w') as of:
-    of.write(urllib2.urlopen(url, timeout=5).read())
+    of.write(urllib2.urlopen(req, timeout=5).read())
     time.sleep(intv)
 
-def validate(htmlpath):
-  try:
-    with open(htmlpath) as f:
-      fromstring(f.read())
-    return True
-  except:
-    return False
-
-class Crawler:
+class URLCrawler():
   """
-  The base class for crawler
+  Given a bunch of URLs, and crawl them one by one
   """
-  def __init__(self, odir, olog):
-    self.output_dir = odir
-    self.output_log = olog
+  def __init__(self, log_file=None):
+    if log_file != None:
+      self.log_file = log_file
+      logging.basicConfig(filename=log_file,level=logging.DEBUG)
+    else:
+      logging.basicConfig(level=logging.DEBUG)
 
-  def crawl(self):
-    """
-    Crawling stuff and output to the dir
-    """
-    pass
-
-  def write2log(self):
-    pass
-
-class URLCrawler(Crawler):
-  """
-  Given a bunch of URLs, and crawl them all
-  """
-  def __init__(self, urls, odir, olog):
-    self.output_dir = odir
-    self.output_log = olog
-    self.urls = urls
-
-  def calibrate(self):
+  def calibrate(self, urls, download_dir):
     crawled = []
     tocrawl = []
-    for f in os.listdir(self.output_dir):
-      if os.path.getsize(os.path.join(self.output_dir, f)) > 0:
+    for f in os.listdir(download_dir):
+      if os.path.getsize(os.path.join(download_dir, f)) > 0:
         crawled.append(f) 
-    for url in self.urls:
+    for url in urls:
       if self.url2fname(url) not in crawled:
         tocrawl.append(url)
-    print '--------------------------------------------------------------------'
-    print ' CALIBRATION'
-    print '--------------------------------------------------------------------'
+    logging.info('--------------------------------------------------------------------')
+    logging.info(' CALIBRATION')
+    logging.info('--------------------------------------------------------------------')
     #print 'URL#1:        ', crawled[0]
     #print 'URL#2:        ', crawled[1]
     #print 'URL#3:        ', crawled[2]
     #print 'URL#4:        ', crawled[3]
     #print '--------------------------------------------------------------------'
-    print '#CRAWLED URLS:', len(crawled)
-    print '#TOCRAWL URLS:', len(tocrawl)
-    print '--------------------------------------------------------------------'
+    logging.info('#CRAWLED URLS: ' + str(len(crawled)))
+    logging.info('#TOCRAWL URLS: ' + str(len(tocrawl)))
+    logging.info('--------------------------------------------------------------------')
     return tocrawl
 
-  def crawl(self):
-    for url in self.urls:
+  def crawl(self, urls, download_dir, mandatory=False):
+    scnt = 0
+    fcnt = 0
+    if os.path.exists(download_dir) == False:
       try:
-        crawl(url, os.path.join(self.output_dir, self.url2fname(url)))
-        print 'CRAWLED: ', url
-      except:
-        print "FAILURE:", url
+        os.makedirs(download_dir)
+      except Exception as e:
+        logging.error(e)
+        logging.error('Fail to mkdir: ' + download_dir)
+        return
+    for url in urls:
+      dstpath = os.path.join(download_dir, self.url2fname(url))
+      if mandatory == False and os.path.exists(dstpath):
+        logging.info('SKIP (CRAWLED): ' + url)
+      else:
+        try:
+          crawl(url, dstpath)
+          logging.info('CRAWLED: ' + url)
+          scnt += 1
+        except Exception as e:
+          logging.error('FAILURE: ' + url)
+          logging.error(e)
+          fcnt +=1
+    logging.info('#Crawled URLs: ' + str(scnt))
+    if fcnt > 0:
+      logging.info('#Failed URLs: ' + str(fcnt))
 
   def url2fname(self, url):
     return url[url.rfind('/') + 1:]
