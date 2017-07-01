@@ -93,6 +93,12 @@ class Thread:
       post.fromjson(a)
       self.answers.append(post)
 
+  def bprint(self):
+    print '[' + self.stat + '] ' + self.title + ' (' + str(len(self.answers)) + ' answers)'
+    print self.question.content
+    for a in self.answers:
+      print a.content
+
   def __str__(self):
     if self.title == None:
       return None

@@ -7,8 +7,7 @@ from post import Post
 from post import Thread
 
 def parsePRHTML(htmlstr, orgurl=None):
-  """parse a PR page
-  Return a Thread object
+  """parse a PR page; return a Thread object
   """
   thread = Thread()
   try:
