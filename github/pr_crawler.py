@@ -3,9 +3,9 @@ import urllib
 import urllib2, base64
 import time
 import os
-import sys
 import utils
 
+import sys
 sys.path.append('..')
 from crawler import URLCrawler
 

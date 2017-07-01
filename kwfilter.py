@@ -21,6 +21,7 @@ class KWFilter:
   def __init__(self, kwsl, repl=None):
     self.kwor = kwsl
     self.repl = repl
+    self.dcnt = {}
 
   def contains(self, text, tolower=True):
     if self.repl != None:
@@ -28,21 +29,28 @@ class KWFilter:
         text = text.replace(r, self.repl[r])
     for kws in self.kwor:
       if self.__contains_all(text, kws, tolower):
+        kwstr = self.__kws2str(kws)
+        if kwstr not in self.dcnt:
+          self.dcnt[kwstr] = 1
+        else:
+          self.dcnt[kwstr] = self.dcnt[kwstr] + 1
         return True
     return False
 
   def __contains_all(self, text, kws, tolower):
+    text = text.lower() if tolower else text
     for kw in kws:
-      if tolower == True:
-        kw = kw.lower()
-        text = text.lower()
+      kw = kw.lower() if tolower else kw
       if kw not in text:
         return False
     return True
 
-def cmt_selector(cmts, kwfilt):
-  res = []
-  for cmt in cmts:
-    for kwfilt.contains():
-      res.append(cmt)
-  return res
+  def __kws2str(self, kws):
+    return ','.join(kws)
+
+  def print_kw_matches(self):
+    d_view = [ (v,k) for k,v in self.dcnt.iteritems() ]
+    d_view.sort(reverse=True)
+    for v, k in d_view:
+      print "%s: %d" % (k,v)
+
