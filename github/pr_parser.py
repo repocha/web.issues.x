@@ -46,7 +46,8 @@ def __gettitle(doc):
 def __norm(tstr):
   return tstr.encode('utf-8').replace('\n', ' ').replace('\r', '').strip()
 
-###test
-#with open('5733') as f:
-#  t = parsePRHTML(f.read(), 'xxxxxxxx')
-#  t.bprint()
+def parse_prs(prl):
+  thds = []
+  for prp in prl:
+    thds.append(parsePRHTML(prp[1], prp[0]))
+  return thds
