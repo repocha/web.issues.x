@@ -30,8 +30,9 @@ def parsePRHTML(htmlstr, orgurl=None):
         thread.answers.append(Post(None, None, thread.title, content))
     return thread
   except Exception as e:
-    url = orgurl if orgurl != None else ''
-    logging.error('FAILURE: ' + url + '. ' + str(e))
+    if len(htmlstr.strip()) > 0: #ignore empty strings
+      url = orgurl if orgurl != None else ''
+      logging.error('FAILURE: ' + url + ' | ' + str(e))
     return None
 
 
