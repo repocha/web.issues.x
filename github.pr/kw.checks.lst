@@ -1,0 +1,154 @@
+Abbreviation As Word In Name
+Abstract Class Name
+Annotation Location
+Annotation Use Style
+Anon Inner Length
+Array Trailing Comma
+Array Type Style
+Atclause Order
+Avoid Escaped Unicode Characters
+Avoid Inline Conditionals
+Avoid Nested Blocks
+Avoid Star Import
+Avoid Static Import
+Boolean Expression Complexity
+Catch Parameter Name
+Class Data Abstraction Coupling
+Class Fan Out Complexity
+Class Type Parameter Name
+Comments Indentation
+Constant Name
+Covariant Equals
+Custom Import Order
+Cyclomatic Complexity
+Declaration Order
+Default Comes Last
+Descendant Token
+Design For Extension
+Empty Block
+Empty Catch Block
+Empty For Initializer Pad
+Empty For Iterator Pad
+Empty Line Separator
+Empty Statement
+Equals Avoid Null
+Equals Hash Code
+Executable Statement Count
+Explicit Initialization
+Fall Through
+File Length
+File Tab Character
+Final Class
+Final Local Variable
+Final Parameters
+Generic Whitespace
+#Header
+Hidden Field
+Hide Utility Class Constructor
+Illegal Catch
+Illegal Import
+Illegal Instantiation
+Illegal Throws
+Illegal Token
+Illegal Token Text
+Illegal Type
+Import Control
+Import Order
+Indentation
+Inner Assignment
+Inner Type Last
+Interface Is Type
+Interface Type Parameter Name
+Javadoc Method
+Javadoc Package
+Javadoc Paragraph
+Javadoc Style
+Javadoc Tag Continuation Indentation
+Javadoc Type
+Javadoc Variable
+JavaNCSS
+Left Curly
+Line Length
+Local Final Variable Name
+Local Variable Name
+Magic Number
+Member Name
+Method Count
+Method Length
+Method Name
+Method Param Pad
+Method Type Parameter Name
+Missing Ctor
+Missing Deprecated
+Missing Override
+Missing Switch Default
+Modified Control Variable
+Modifier Order
+Multiple String Literals
+Multiple Variable Declarations
+Mutable Exception
+Need Braces
+Nested For Depth
+Nested If Depth
+Nested Try Depth
+Newline At End Of File
+No Clone
+No Finalizer
+No Line Wrap
+Non Empty Atclause Description
+No Whitespace After
+No Whitespace Before
+N Path Complexity
+One Statement Per Line
+One Top Level Class
+Operator Wrap
+Outer Type Filename
+Outer Type Number
+Overload Methods Declaration Order
+Package Annotation
+Package Declaration
+Package Name
+Parameter Assignment
+Parameter Name
+Parameter Number
+Paren Pad
+Redundant Import
+Redundant Modifier
+Regexp
+Regexp Header
+Regexp Multiline
+Regexp On Filename
+Regexp Singleline
+Regexp Singleline Java
+Require This
+Return Count
+Right Curly
+Separator Wrap
+Simplify Boolean Expression
+Simplify Boolean Return
+Single Line Javadoc
+Single Space Separator
+Static Variable Name
+String Literal Equality
+Summary Javadoc
+Super Clone
+Super Finalize
+Suppress Warnings
+Throws Count
+Todo Comment
+Trailing Comment
+#Translation
+Typecast Paren Pad
+Type Name
+Uncommented Main
+Unique Properties
+Unnecessary Parentheses
+Unused Imports
+Upper Ell
+Variable Declaration Usage Distance
+Visibility Modifier
+Whitespace After
+Whitespace Around
+Write Tag
+File Contents Holder
+Suppress Warnings Holder
