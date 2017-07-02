@@ -120,7 +120,7 @@ Regexp Multiline
 Regexp On Filename
 Regexp Singleline
 Regexp Singleline Java
-Require This
+RequireThis
 Return Count
 Right Curly
 Separator Wrap
